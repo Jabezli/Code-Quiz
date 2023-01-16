@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code-Quiz</title>
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+    <!-- top bar for view scores and timer -->
+    <div class="topbar"> 
+        <button class="viewScore">View High Scores</button>
+        <div class="timer">
+            <div class="timeLeft">Time Left</div>
+            <div class="secLeft"></div>
+        </div>   
+    </div>
+
+    <!-- Starting page /display none after clicking start button-->
+    <div class="quizDescr">
+        <h1>Coding Quiz Challenge</h1>
+        <p class="startInfo">
+            Try to answer the following code-related questions within the time limit.
+            <br><br>Keep in mind that incorrect answers will penalize your scrore/time by ten seconds!
+        </p>
+        <button class="startBtn">Start Quiz</button>
+    </div>
+
+    <div class="quizContent">
+        <h2 class="questions">
+        </h2>
+        <div class="answerList">
+            <!-- By adding the onclick under id answerbtn, when the button is clicked, the function will be run in JS and corresponding parameter will be sent to JS.
+            if button0 is clicked, it will send "a". so js knows which button is clicked. -->
+            <button class="answers" id="answerBtn0" onclick="moveOnToNextQuestion('a')">
+                A. <span id="a"></span>
+            </button>
+            <button class="answers" id="answerBtn1" onclick="moveOnToNextQuestion('b')">
+                B. <span id="b"></span>
+            </button>
+            <button class="answers" id="answerBtn2" onclick="moveOnToNextQuestion('c')">
+                C. <span id="c"></span>
+            </button>
+            <button class="answers" id="answerBtn3" onclick="moveOnToNextQuestion('d')">
+                D. <span id="d"></span>
+            </button>
+        </div>
+        <p class="react"></p>
+    </div>
+
+    <!-- final page -->
+    <div class="finalpage">
+        <h2 class="finalh2">All Done!</h2>
+        <div class="finalScore">
+            <p>Your Final Score is <span id="finalscore"></span></p>
+        </div>
+        <form action="">
+            <div class="initials">
+                <p>Enter initials&nbsp;</p>
+                <input id="text" type="text">
+                <button class="submitbutton">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="scorepage">
+        <p>High Scores</p>
+        <ul id="highscores">
+            <li>Placeholder</li>
+        </ul>
+        <div class="scorebuttons">
+            <button class="goback">Go back</button>
+            <button class="clearscores">Clear high scores</button>
+        </div>
+    </div>
+
+
+    
+    <script src="/assets/script.js"></script>
+</body>
+</html>

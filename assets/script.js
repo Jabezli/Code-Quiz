@@ -24,8 +24,6 @@ const initial = document.querySelector("#text");
 const secLeft = document.querySelector(".secLeft");
 const react = document.querySelector(".react");
 
-const lowerCase = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-const upperCase = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
 
 let currentIndex = 0;
@@ -131,7 +129,8 @@ submitBtn.addEventListener("click", function(event) {
 
 function inputValidate (){
     let initialContent = document.querySelector("#text").value;
-    if (lowerCase.includes(initialContent) || upperCase.includes(initialContent)){
+    let letters = /^[A-Za-z]+$/;
+    if (initialContent.match(letters)){
         checkScores();
     }
     else {

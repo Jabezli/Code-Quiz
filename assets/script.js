@@ -59,7 +59,10 @@ const questionList = [
 
 
 
-
+goBackBtn.addEventListener("click", function() {
+    firstPage.style.display="";
+    scorePage.style.display="none";
+} )
 
 startBtnEl.addEventListener("click",quizStart);
 
@@ -126,6 +129,8 @@ submitBtn.addEventListener("click", function(event) {
     }
 );
 
+
+
 function inputValidate (){
     let initialContent = document.querySelector("#text").value;
     let letters = /^[A-Za-z]+$/;
@@ -143,7 +148,7 @@ function renderScores (){
     let li = document.createElement("li");
         li.textContent = initialContent + "-" +finalScore.textContent;
         scoreList.appendChild(li);
-        localStorage.getItem("scores" , li.textContent);
+        localStorage.setItem("scores" , JSON.stringify(li.textContent));
 }
 
 function checkScores(){

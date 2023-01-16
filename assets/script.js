@@ -19,13 +19,12 @@ const finalPage = document.querySelector(".finalpage");
 const finalScore = document.querySelector('#finalscore');
 const submitBtn = document.querySelector('.submitbutton');
 const initial = document.querySelector("#text");
-
-
+const scoreList = document.querySelector("#highscores");
 const secLeft = document.querySelector(".secLeft");
 const react = document.querySelector(".react");
 
 
-
+let socres = localStorage.getItem("scores");
 let currentIndex = 0;
 let timer = 100;
 // this is an array with objects
@@ -132,10 +131,19 @@ function inputValidate (){
     let letters = /^[A-Za-z]+$/;
     if (initialContent.match(letters)){
         checkScores();
+        renderScores();
     }
     else {
         alert("Please enter a valid initial.");
     }
+}
+
+function renderScores (){
+    let initialContent = document.querySelector("#text").value;
+    let li = document.createElement("li");
+        li.textContent = initialContent + "-" +finalScore.textContent;
+        scoreList.appendChild(li);
+        localStorage.getItem("scores" , li.textContent);
 }
 
 function checkScores(){

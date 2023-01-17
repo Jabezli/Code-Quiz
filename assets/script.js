@@ -18,13 +18,11 @@ const d = document.querySelector("#d");
 const finalPage = document.querySelector(".finalpage");
 const finalScore = document.querySelector('#finalscore');
 const submitBtn = document.querySelector('.submitbutton');
-const initial = document.querySelector("#text");
 const scoreList = document.querySelector("#highscores");
 const secLeft = document.querySelector(".secLeft");
 const react = document.querySelector(".react");
+const clearBtn = document.querySelector(".clearscores");
 
-
-let socres = localStorage.getItem("scores");
 let currentIndex = 0;
 let timer = 100;
 // this is an array with objects
@@ -60,15 +58,21 @@ const questionList = [
 
 
 goBackBtn.addEventListener("click", function() {
-    firstPage.style.display="";
+    firstPage.style.display="block";
+    quizContent.style.display="none";
+    finalPage.style.display = "none";
     scorePage.style.display="none";
 } )
+
+//clearBtn.addEventListener("click",localstorage.clear());
 
 startBtnEl.addEventListener("click",quizStart);
 
 function quizStart (){
     firstPage.style.display="none";
     quizContent.style.display="flex";
+    currentIndex = 0;
+    timer = 100;
     secLeft.textContent = timer;
     displayQuestions();
     countDown();
@@ -126,6 +130,8 @@ viewScoreBtn.addEventListener("click",checkScores)
 submitBtn.addEventListener("click", function(event) {
     event.preventDefault();
     inputValidate();
+    createScoreEl();
+    saveScores();
     }
 );
 
@@ -136,20 +142,45 @@ function inputValidate (){
     let letters = /^[A-Za-z]+$/;
     if (initialContent.match(letters)){
         checkScores();
-        renderScores();
     }
     else {
         alert("Please enter a valid initial.");
     }
 }
 
-function renderScores (){
-    let initialContent = document.querySelector("#text").value;
-    let li = document.createElement("li");
-        li.textContent = initialContent + "-" +finalScore.textContent;
-        scoreList.appendChild(li);
-        localStorage.setItem("scores" , JSON.stringify(li.textContent));
+const scoreArray = [];
+
+function saveScores(){
+    let scoreRecords = {};
+    scoreRecords.initials = document.querySelector("#text").value;
+    scoreRecords.score = finalScore.textContent;
+    li.textContent = scoreRecords.initials +" - " + scoreRecords.score;
+    scoreArray.push(scoreRecords);
+    localStorage.setItem("scoreRecords", JSON.stringify(scoreArray));
 }
+
+
+// function addScores(initial,score){
+//     initial = document.querySelector("#text").value;
+//     score = timer;
+//     scoreArray.push({initial,score});
+//     localStorage.setItem("scoreInfo", JSON.stringify(scoreArray));
+//     return {initial,score};
+// };
+
+function createScoreEl(){
+    let li = document.createElement("li");
+    // let initial = document.querySelector("#text").value;
+    // li.textContent = initial + "-" +finalScore.textContent;
+    scoreList.appendChild(li);
+};
+// function renderScores (){
+//     let initialContent = document.querySelector("#text").value;
+//     let li = document.createElement("li");
+//         li.textContent = initialContent + "-" +finalScore.textContent;
+//         scoreList.appendChild(li);
+//         localStorage.setItem("scores" , JSON.stringify(li.textContent));
+// }
 
 function checkScores(){
     firstPage.style.display="none";

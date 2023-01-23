@@ -95,6 +95,7 @@ function displayQuestions() {
     if (currentIndex === questionList.length) {
        quizContent.style.display="none";
        finalPage.style.display="flex";
+       //this will ensure an empty "input box" every time enter an initial
        textEL.value = "";
        finalScore.textContent = timer;
        //if I don't add the return here, there will be an issue as the next line of the function will keep running but 

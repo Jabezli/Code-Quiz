@@ -17,11 +17,12 @@ const c = document.querySelector("#c");
 const d = document.querySelector("#d");
 const finalPage = document.querySelector(".finalpage");
 const finalScore = document.querySelector('#finalscore');
-const submitBtn = document.querySelector('.submitbutton');
+const submitBtn = document.querySelector('#submit-form');
 const scoreList = document.querySelector("#highscores");
 const secLeft = document.querySelector(".secLeft");
 const react = document.querySelector(".react");
 const clearBtn = document.querySelector(".clearscores");
+const textEL = document.querySelector("#text");
 
 let currentIndex = 0;
 let timer = 100;
@@ -64,7 +65,6 @@ goBackBtn.addEventListener("click", function() {
     scorePage.style.display="none";
 } )
 
-//clearBtn.addEventListener("click",localstorage.clear());
 
 startBtnEl.addEventListener("click",quizStart);
 
@@ -83,8 +83,9 @@ setInterval(function(){
     if (timer >= 1 && currentIndex < 5){
     timer--;
     secLeft.textContent = timer;}
-    else{
-        secLeft.textContent = "Time up"
+    else {
+        secLeft.textContent = "Time up";
+
     }
 
 }, 1000)};
@@ -94,6 +95,7 @@ function displayQuestions() {
     if (currentIndex === questionList.length) {
        quizContent.style.display="none";
        finalPage.style.display="flex";
+       textEL.value = "";
        finalScore.textContent = timer;
        //if I don't add the return here, there will be an issue as the next line of the function will keep running but 
        //there is not more question to render
@@ -127,11 +129,11 @@ function moveOnToNextQuestion(choice) {
 
 viewScoreBtn.addEventListener("click",checkScores)
 
-submitBtn.addEventListener("click", function(event) {
+submitBtn.addEventListener("submit", function(event) {
     event.preventDefault();
     inputValidate();
-    createScoreEl();
     saveScores();
+    createScoreEl();
     }
 );
 
@@ -146,47 +148,48 @@ function inputValidate (){
     else {
         alert("Please enter a valid initial.");
     }
-}
+};
 
-const scoreArray = [];
+let scoreArray = JSON.parse(localStorage.getItem('scoreRecords')) || [];
 
 function saveScores(){
     let scoreRecords = {};
     scoreRecords.initials = document.querySelector("#text").value;
     scoreRecords.score = finalScore.textContent;
-    li.textContent = scoreRecords.initials +" - " + scoreRecords.score;
     scoreArray.push(scoreRecords);
     localStorage.setItem("scoreRecords", JSON.stringify(scoreArray));
 }
 
 
-// function addScores(initial,score){
-//     initial = document.querySelector("#text").value;
-//     score = timer;
-//     scoreArray.push({initial,score});
-//     localStorage.setItem("scoreInfo", JSON.stringify(scoreArray));
-//     return {initial,score};
-// };
-
 function createScoreEl(){
-    let li = document.createElement("li");
-    // let initial = document.querySelector("#text").value;
-    // li.textContent = initial + "-" +finalScore.textContent;
-    scoreList.appendChild(li);
+    // the while loop is to remove all "li" so when get the string back from local storage, it got listed only once.
+    while (scoreList.firstChild) {
+        scoreList.removeChild(scoreList.firstChild);
+      };
+
+    for (var i = 0; i < scoreArray.length; i++){
+        let li = document.createElement("li");
+        let name = scoreArray[i].initials + "-" + scoreArray[i].score;
+        li.textContent = name;
+        scoreList.appendChild(li);
+    }  
 };
-// function renderScores (){
-//     let initialContent = document.querySelector("#text").value;
-//     let li = document.createElement("li");
-//         li.textContent = initialContent + "-" +finalScore.textContent;
-//         scoreList.appendChild(li);
-//         localStorage.setItem("scores" , JSON.stringify(li.textContent));
-// }
+
+clearBtn.addEventListener("click", function(){
+    localStorage.clear()
+    scoreList.textContent = "";
+});
+    
+
+//clearBtn.addEventListener("click",localstorage.clear());
+
 
 function checkScores(){
     firstPage.style.display="none";
     quizContent.style.display="none";
     finalPage.style.display = "none";
     scorePage.style.display="flex";
+
 }
 
 

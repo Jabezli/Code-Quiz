@@ -63,6 +63,8 @@ goBackBtn.addEventListener("click", function() {
     quizContent.style.display="none";
     finalPage.style.display = "none";
     scorePage.style.display="none";
+    //window.location.reload();
+    
 } )
 
 
@@ -151,14 +153,20 @@ function inputValidate (){
     }
 };
 
-let scoreArray = JSON.parse(localStorage.getItem('scoreRecords')) || [];
+function getScores(){
+    let scoreArray = JSON.parse(localStorage.getItem('scoreRecords')) || [];
+    return scoreArray;
+}
 
 function saveScores(){
     let scoreRecords = {};
     scoreRecords.initials = document.querySelector("#text").value;
     scoreRecords.score = finalScore.textContent;
-    scoreArray.push(scoreRecords);
-    localStorage.setItem("scoreRecords", JSON.stringify(scoreArray));
+    let scores = getScores();
+    console.log(scores);
+    scores.push(scoreRecords);
+    //console.log(scoreArray);
+    localStorage.setItem("scoreRecords", JSON.stringify(scores));
 }
 
 
@@ -168,22 +176,20 @@ function createScoreEl(){
         scoreList.removeChild(scoreList.firstChild);
       };
 
-    for (var i = 0; i < scoreArray.length; i++){
+    let scores = getScores();  
+
+    for (var i = 0; i < scores.length; i++){
         let li = document.createElement("li");
-        let name = scoreArray[i].initials + "-" + scoreArray[i].score;
+        let name = scores[i].initials + "-" + scores[i].score;
         li.textContent = name;
         scoreList.appendChild(li);
     }  
 };
 
 clearBtn.addEventListener("click", function(){
-    localStorage.clear()
+    localStorage.clear();    
     scoreList.textContent = "";
 });
-    
-
-//clearBtn.addEventListener("click",localstorage.clear());
-
 
 function checkScores(){
     firstPage.style.display="none";

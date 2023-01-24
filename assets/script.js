@@ -187,7 +187,7 @@ function createScoreEl(){
 };
 
 clearBtn.addEventListener("click", function(){
-    localStorage.clear();    
+    localStorage.clear(); 
     scoreList.textContent = "";
 });
 
@@ -196,7 +196,6 @@ function checkScores(){
     quizContent.style.display="none";
     finalPage.style.display = "none";
     scorePage.style.display="flex";
-
 }
 
 
